@@ -4,6 +4,12 @@ Il s'agit du projet n°7 d'OpenClassrooms où l'on doit créer un réseau social
 
 ## Technologie utilisée 
 
+- HTML
+- CSS
+- JS
+
+## Frameworks
+
 -
 
 ## Pour lancer le projet 
