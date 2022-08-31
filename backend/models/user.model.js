@@ -10,7 +10,9 @@ const userSchema = new mongoose.Schema({
     password: { type: String, require: true, maxLength: 1000, minLength: 6 },
     picture: { type: String },
     likes: { type: [String] }
-
+},
+    {
+        timestamps: true,
 });
 
 userSchema.plugin(uniqueValidator);
