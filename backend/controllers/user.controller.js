@@ -40,7 +40,7 @@ module.exports.deleteUser = async (req, res) => {
     return res.status(400).send("ID inconnu : " + req.params.id);
 
     try {
-        await userModel.remove({ _id: req.params.id }).exec();
+        await userModel.deleteOne({ _id: req.params.id }).exec();
         res.status(200).json({ message: "Profil supprimé" });
     }
     catch (error) {
