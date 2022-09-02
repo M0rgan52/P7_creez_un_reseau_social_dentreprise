@@ -22,6 +22,18 @@ userSchema.pre("save", async function(next) {
     next();
 })
 
+userSchema.statics.login = async function(email, password) {
+    const user = await this.findOne({ email });
+    if (user) {
+        const auth = await bcrypt.compare(password, user.password);
+        if (auth) {
+            return user;
+        }
+        throw Error ("Combinaison email/mot de passe incorrecte");
+    }
+    throw Error ("Combinaison email/mot de passe incorrecte");
+};
+
 userSchema.plugin(uniqueValidator);
 
 module.exports = mongoose.model("user", userSchema);
