@@ -7,11 +7,33 @@ module.exports.getAllUsers = async (req, res) => {
 }
 
 module.exports.getOneUsers = (req, res) => {
-    if (!ObjectID.isValid(req.params.id)) 
-        return res.status(400).send( "ID inconnu : " + req.params.id );
+    if (!ObjectID.isValid(req.params.id))
+        return res.status(400).send("ID inconnu : " + req.params.id);
 
     UserModel.findById(req.params.id, (err, docs) => {
         if (!err) res.send(docs);
-        else console.log( "ID inconnu : " + err );
+        else console.log("ID inconnu : " + err);
     }).select("-password");
 };
+
+module.exports.updateUser = async (req, res) => {
+    if (!ObjectID.isValid(req.params.id))
+        return res.status(400).send("ID inconnu : " + req.params.id);
+
+    try {
+        await UserModel.findOneAndUpdate(
+            { _id: req.params.id },
+            { $set: { prenom: req.body.prenom, nom: req.body.nom, fonction: req.body.fonction }, },
+            { new: true, upsert: true, setDefaultsOnInsert: true })
+            .then((data) => res.send(data))
+            .catch((error) => res.status(500).json({ error }));
+    }
+    catch (error) {
+        return res.status(500).json({ error });
+    }
+
+};
+
+module.exports.deleteUsers = (req, res) => {
+
+}
