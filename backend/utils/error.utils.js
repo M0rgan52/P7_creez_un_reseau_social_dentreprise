@@ -12,3 +12,15 @@ module.exports.signUpErrors = (err) => {
     
     return errors
 };
+
+module.exports.signInErrors = (err) => {
+    let errors = { email: "", password: "" };
+
+    if (err.message.includes("email"))
+        errors.email = "Combinaison email/mot de passe incorrecte";
+
+    if (err.message.includes("password"))
+        errors.password = "Combinaison email/mot de passe incorrecte";
+    
+    return errors
+};
