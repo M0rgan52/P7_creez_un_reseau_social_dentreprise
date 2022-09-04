@@ -58,5 +58,16 @@ module.exports.deletePost = async (req, res) => {
             else console.log(" Erreur suppression : " + err);
         }
     )
+};
+
+module.exports.likePost = async (req, res) => {
+    if (!ObjectID.isValid(req.params.id))
+        return res.status(400).send("ID inconnu : " + req.params.id);
+
+};
+
+module.exports.dislikePost = async (req, res) => {
+    if (!ObjectID.isValid(req.params.id))
+        return res.status(400).send("ID inconnu : " + req.params.id);
 
 };
