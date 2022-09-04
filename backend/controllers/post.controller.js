@@ -28,11 +28,35 @@ module.exports.createPost = async (req, res) => {
 };
 
 module.exports.updatePost = async (req, res) => {
+    if (!ObjectID.isValid(req.params.id))
+        return res.status(400).send("ID inconnu : " + req.params.id);
 
+    const updatedRecord = {
+        message: req.body.message
+    }
+
+    PostModel.findByIdAndUpdate(
+        req.params.id,
+        { $set: updatedRecord },
+        { new: true },
+        (err, docs) => {
+            if (!err) res.send(docs);
+            else console.log(" Erreur mise à jour : " + err);
+        }
+    )
 
 };
 
 module.exports.deletePost = async (req, res) => {
+    if (!ObjectID.isValid(req.params.id))
+        return res.status(400).send("ID inconnu : " + req.params.id);
 
+    postModel.findOneAndDelete(
+        req.params.id,
+        (err, docs) => {
+            if (!err) res.send(docs);
+            else console.log(" Erreur suppression : " + err);
+        }
+    )
 
 };
