@@ -136,7 +136,27 @@ module.exports.commentPost = (req, res) => {
 };
 
 module.exports.editCommentPost = (req, res) => {
+    if (!ObjectID.isValid(req.params.id))
+        return res.status(400).send("ID inconnu : " + req.params.id);
 
+    try {
+        return PostModel.findById(req.params.id, (err, docs) => {
+            const theComment = docs.comments.find((comment) =>
+                comment._id.equals(req.body.commentId)
+            );
+
+            if (!theComment) return res.status(404).send("Le commentaire n'a pas été trouvé");
+            theComment.text = req.body.text;
+
+            return docs.save((err) => {
+                if (!err) return res.status(200).send(docs);
+                return res.status(500).send(err);
+            });
+        });
+
+    } catch (err) {
+        return res.status(400).send(err);
+    }
 };
 
 module.exports.deleteCommentPost = (req, res) => {
