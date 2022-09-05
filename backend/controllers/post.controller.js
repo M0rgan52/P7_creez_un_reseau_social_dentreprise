@@ -107,3 +107,38 @@ module.exports.dislikePost = async (req, res) => {
     }
 
 };
+
+module.exports.commentPost = (req, res) => {
+    if (!ObjectID.isValid(req.params.id))
+        return res.status(400).send("ID inconnu : " + req.params.id);
+
+    try {
+        return PostModel.findByIdAndUpdate(
+            req.params.id,
+            {
+                $push: {
+                    comments: {
+                        commenterId: req.body.commenterId,
+                        commenterEmail: req.body.commenterEmail,
+                        text: req.body.text,
+                        timestamp: new Date().getTime(),
+                    }
+                }
+            },
+            { new: true },
+        )
+            .then((docs) => res.send(docs))
+            .catch((error) => res.status(400).send(error));
+    } catch (err) {
+        return res.status(400).send(err);
+    }
+
+};
+
+module.exports.editCommentPost = (req, res) => {
+
+};
+
+module.exports.deleteCommentPost = (req, res) => {
+
+};
