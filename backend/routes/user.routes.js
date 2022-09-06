@@ -17,6 +17,6 @@ router.put("/:id", userController.updateUser);
 router.delete("/:id", userController.deleteUser);
 
 // Routes avec images
-router.post("/upload", multer, uploadController.uploadProfil);
+router.post("/upload", upload.single("file"), uploadController.uploadProfil);
 
 module.exports = router;
