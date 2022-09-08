@@ -9,7 +9,7 @@ const userSchema = new mongoose.Schema(
     fonction: { type: String },
     email: { type: String, require: true, unique: true, trim: true, match: [/^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/, "Veuillez entrer une adresse email correcte"], lowercase: true },
     password: { type: String, require: true, maxlength: 1000, minlength: 6 },
-    picture: { type: String, default: "./images/user-default.png" },
+    picture: { type: String, default: "./images/profils/user-default.png" },
     likes: { type: [String] }
 },
     {

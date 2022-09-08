@@ -17,7 +17,7 @@ module.exports.createPost = async (req, res, next) => {
         const newPost = new PostModel({
             posterId: req.body.posterId,
             message: req.body.message,
-            picture: `${req.protocol}://${req.get("host")}/images/posts/${req.file.filename}`,
+            picture: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
             likers: [],
             comments: []
         });
@@ -68,8 +68,8 @@ module.exports.deletePost = async (req, res) => {
 
     PostModel.findOne({ _id: req.params.id })
         .then(post => {
-                const filename = post.picture.split('/images/posts/')[1];
-                fs.unlink(`./images/posts/${filename}`, () => {
+                const filename = post.picture.split('/images/')[1];
+                fs.unlink(`./images/${filename}`, () => {
                     PostModel.deleteOne({ _id: req.params.id})
                         .then(() => res.status(200).json({ message: 'post supprimée !'}))
                         .catch( error => res.status(401).json({ error }));
