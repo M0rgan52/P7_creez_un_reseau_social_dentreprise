@@ -44,7 +44,6 @@ module.exports.createPost = async (req, res) => {
         posterId: req.body.posterId,
         message: req.body.message,
         picture: req.file !== null ? "./uploads/posts/" + fileName : "",
-        video: req.body.video,
         likers: [],
         comments: [],
     });
