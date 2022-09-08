@@ -1,9 +1,6 @@
 const PostModel = require("../models/post.model");
 const UserModel = require("../models/user.model");
-const { uploadErrors } = require("../utils/error.utils");
 const fs = require("fs");
-const { promisify } = require("util");
-const pipeline = promisify(require("stream").pipeline);
 const ObjectID = require("mongoose").Types.ObjectId;
 
 module.exports.readPost = (req, res) => {
@@ -13,47 +10,34 @@ module.exports.readPost = (req, res) => {
     }).sort({ createdAt: -1 });
 };
 
-module.exports.createPost = async (req, res) => {
-    let fileName;
+module.exports.createPost = async (req, res, next) => {
 
-    if (req.file !== null) {
-        try {
-            if (
-                req.file.detectedMimeType != "image/jpg" &&
-                req.file.detectedMimeType != "image/png" &&
-                req.file.detectedMimeType != "image/jpeg"
-            )
-                throw Error("format invalide");
+    if (req.file != null) {
+        const newPost = new PostModel({
+            posterId: req.body.posterId,
+            message: req.body.message,
+            picture: `${req.protocol}://${req.get("host")}/images/posts/${req.file.filename}`,
+            likers: [],
+            comments: []
+        });
 
-            if (req.file.size > 500000) throw Error("taille d'image trop importante");
-        } catch (err) {
-            const errors = uploadErrors(err);
-            return res.status(201).json({ errors });
-        }
-        fileName = req.body.posterId + Date.now() + ".jpg";
+        newPost.save()
+        .then(() => res.status(201).json({ message: "Post créé" }))
+        .catch(error => res.status(400).json({ error }));
 
-        await pipeline(
-            req.file.stream,
-            fs.createWriteStream(
-                `${__dirname}/../client/public/uploads/posts/${fileName}`
-            )
-        );
+    } else {
+        const newPost = new PostModel({
+            posterId: req.body.posterId,
+            message: req.body.message,
+            likers: [],
+            comments: []
+        })
+
+        newPost.save()
+        .then(() => res.status(201).json({ message: "Post créé" }))
+        .catch(error => res.status(400).json({ error }));
     }
 
-    const newPost = new PostModel({
-        posterId: req.body.posterId,
-        message: req.body.message,
-        picture: req.file !== null ? "./uploads/posts/" + fileName : "",
-        likers: [],
-        comments: [],
-    });
-
-    try {
-        const post = await newPost.save();
-        return res.status(201).json(post);
-    } catch (error) {
-        return res.status(400).send(error);
-    }
 };
 
 module.exports.updatePost = async (req, res) => {
@@ -76,17 +60,22 @@ module.exports.updatePost = async (req, res) => {
 
 };
 
-module.exports.deletePost = async (req, res) => {
-    if (!ObjectID.isValid(req.params.id))
-        return res.status(400).send("ID inconnu : " + req.params.id);
+module.exports.deletePost = async (req, res, next) => {
+    PostModel.findOne(req.params.id)
+        .then(post => {
+            if (!ObjectID.isValid(req.params.id)) {
+                return res.status(401).send("ID inconnu : " + req.params.id);
+            } else {
 
-    PostModel.findByIdAndDelete(
-        req.params.id,
-        (err, docs) => {
-            if (!err) res.send(docs);
-            else console.log(" Erreur suppression : " + err);
-        }
-    )
+                const filename = req.file.filename;
+                fs.unlink(`images/posts/${filename}`, () => {
+                    PostModel.deleteOne(req.params.id)
+                        .then(() => res.status(200).json({ message: "Post supprimé" }))
+                        .catch(error => res.status(401).json({ error }));
+                })
+            }
+        })
+        .catch(error => res.status(500).json({ error }));
 };
 
 module.exports.likePost = async (req, res) => {
