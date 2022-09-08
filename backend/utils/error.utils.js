@@ -25,14 +25,14 @@ module.exports.signInErrors = (err) => {
     return errors
 };
 
-module.exports.uploadErrors = (err) => {
-    let errors = { format: "", maxSize: "" };
+// module.exports.uploadErrors = (err) => {
+//     let errors = { format: "", maxSize: "" };
 
-    if (err.message.includes("invalid file"))
-        errors.format = "Format incompatible";
+//     if (err.message.includes("invalid file"))
+//         errors.format = "Format incompatible";
 
-    if (err.message.includes("max size"))
-        errors.maxSize = "Taille de l'image trop importante (> 500ko)";
+//     if (err.message.includes("max size"))
+//         errors.maxSize = "Taille de l'image trop importante (> 500ko)";
 
-    return errors
-};
+//     return errors
+// };

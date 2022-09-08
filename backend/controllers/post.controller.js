@@ -1,7 +1,6 @@
 const PostModel = require("../models/post.model");
 const UserModel = require("../models/user.model");
 const fs = require("fs");
-const { post } = require("../app");
 const ObjectID = require("mongoose").Types.ObjectId;
 
 module.exports.readPost = (req, res) => {
