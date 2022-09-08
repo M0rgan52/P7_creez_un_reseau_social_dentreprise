@@ -1,6 +1,7 @@
 const PostModel = require("../models/post.model");
 const UserModel = require("../models/user.model");
 const fs = require("fs");
+const { post } = require("../app");
 const ObjectID = require("mongoose").Types.ObjectId;
 
 module.exports.readPost = (req, res) => {
@@ -22,8 +23,8 @@ module.exports.createPost = async (req, res, next) => {
         });
 
         newPost.save()
-        .then(() => res.status(201).json({ message: "Post créé" }))
-        .catch(error => res.status(400).json({ error }));
+            .then(() => res.status(201).json({ message: "Post créé" }))
+            .catch(error => res.status(400).json({ error }));
 
     } else {
         const newPost = new PostModel({
@@ -34,8 +35,8 @@ module.exports.createPost = async (req, res, next) => {
         })
 
         newPost.save()
-        .then(() => res.status(201).json({ message: "Post créé" }))
-        .catch(error => res.status(400).json({ error }));
+            .then(() => res.status(201).json({ message: "Post créé" }))
+            .catch(error => res.status(400).json({ error }));
     }
 
 };
@@ -60,20 +61,19 @@ module.exports.updatePost = async (req, res) => {
 
 };
 
-module.exports.deletePost = async (req, res, next) => {
-    PostModel.findOne(req.params.id)
-        .then(post => {
-            if (!ObjectID.isValid(req.params.id)) {
-                return res.status(401).send("ID inconnu : " + req.params.id);
-            } else {
+module.exports.deletePost = async (req, res) => {
 
-                const filename = req.file.filename;
-                fs.unlink(`images/posts/${filename}`, () => {
-                    PostModel.deleteOne(req.params.id)
-                        .then(() => res.status(200).json({ message: "Post supprimé" }))
-                        .catch(error => res.status(401).json({ error }));
+    if (!ObjectID.isValid(req.params.id))
+    return res.status(400).send("ID inconnu : " + req.params.id);
+
+    PostModel.findOne({ _id: req.params.id })
+        .then(post => {
+                const filename = post.picture.split('/images/posts/')[1];
+                fs.unlink(`./images/posts/${filename}`, () => {
+                    PostModel.deleteOne({ _id: req.params.id})
+                        .then(() => res.status(200).json({ message: 'post supprimée !'}))
+                        .catch( error => res.status(401).json({ error }));
                 })
-            }
         })
         .catch(error => res.status(500).json({ error }));
 };
