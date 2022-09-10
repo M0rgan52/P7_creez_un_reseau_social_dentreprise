@@ -1,11 +1,11 @@
 import React from "react";
 
-const index = () => {
+const home = () => {
     return (
         <div>
-            
+          Page Home  
         </div>
     );
 };
 
-export default index;
+export default home;

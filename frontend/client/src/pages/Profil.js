@@ -1,11 +1,11 @@
 import React from "react";
 
-const index = () => {
+const profil = () => {
     return (
         <div>
-            
+            Page profil
         </div>
     );
 };
 
-export default index;
+export default profil;
