@@ -4,6 +4,7 @@ import { updatePrenom, updateNom, updateFonction } from "../../actions/user.acti
 import LeftNav from "../leftNav";
 // import userReducer from './../../reducers/user.reducer';
 import UploadImg from './UploadImg';
+import { dateParser } from './../Utils';
 
 
 const UpdateProfil = () => {
@@ -87,6 +88,7 @@ const UpdateProfil = () => {
                             </>
                         )}
                     </div>
+                    <h4>Compte créé le : {dateParser(userData.createdAt)}</h4>
                 </div>
 
             </div>
