@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from 'react-redux';
 import LeftNav from "../leftNav";
-import userReducer from './../../reducers/user.reducer';
+// import userReducer from './../../reducers/user.reducer';
 import UploadImg from './UploadImg';
 
 
@@ -15,6 +15,7 @@ const UpdateProfil = () => {
             <div className="update-container">
                 <div className="left-part">
                     <h3>Photo de profil</h3>
+                    {/* eslint-disable-next-line */}
                     <img src={userData.picture} alt="Photo de profil" />
                     <UploadImg />
                 </div>
