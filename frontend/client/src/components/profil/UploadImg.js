@@ -10,9 +10,8 @@ const UploadImg = () => {
     const handlePicture = (e) => {
         e.preventDefault();
         const data = new FormData();
-        data.append("name", userData.email);
         data.append("userId", userData._id);
-        data.append("file", file);
+        data.append("picture", file);
 
         dispatch(uploadPicture(data, userData._id));
     };
@@ -20,7 +19,7 @@ const UploadImg = () => {
     return (
         <form action="" onSubmit={handlePicture} className="upload-pic">
             <label htmlFor="file">Modifier l'image</label>
-            <input type="file" id="file" name="file" accept=".jpg, .jpeg, .png" onChange={(e) => setFile(e.target.files[0])} />
+            <input type="file" id="file" name="picture" accept=".jpg, .jpeg, .png" onChange={(e) => setFile(e.target.files[0])} />
             <br />
             <input type="submit" value="Envoyer" />
         </form>

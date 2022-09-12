@@ -8,8 +8,8 @@
 
   .log-container {
     margin: 0 auto;
-    display: grid;
-    grid-template-columns: 60% 40%;
+    display: flex;
+    flex-direction: row;
 
     @media screen and (max-width: 885px) {
       grid-template-columns: 1fr;
@@ -103,12 +103,13 @@
     margin: 10px 0 6px;
   }
   .img-container {
-    display: grid;
-    align-items: center;
+    display: flex;
+    justify-content: center;
     height: 100%;
 
     img {
-      height: 280px;
+
+      height: 400px;
 
       @media screen and (max-width: 1050px) {
         height: 220px;

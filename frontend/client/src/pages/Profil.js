@@ -14,7 +14,7 @@ const Profil = () => {
                 <div className="log-container">
                     <Log signin={false} signup={true} />
                     <div className="img-container">
-                        <img src="./img/logos/icon-left-font.svg" alt="Logo Groupomania" />
+                        <img src="./img/icons/login-pic.png" alt="Logo Groupomania" />
                     </div>
                 </div>
             )}

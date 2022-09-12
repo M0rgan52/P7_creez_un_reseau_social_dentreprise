@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import { updatePrenom, updateNom, updateFonction } from "../../actions/user.actions";
 import LeftNav from "../leftNav";
-// import userReducer from './../../reducers/user.reducer';
 import UploadImg from './UploadImg';
 import { dateParser } from './../Utils';
 
