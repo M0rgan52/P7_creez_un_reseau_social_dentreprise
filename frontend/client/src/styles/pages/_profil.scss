@@ -124,9 +124,12 @@
   .update-container {
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    margin: 0 3em;
 
     @media screen and (max-width: 700px) {
       grid-template-columns: 1fr;
+      margin: 0;
     }
 
     > div {
