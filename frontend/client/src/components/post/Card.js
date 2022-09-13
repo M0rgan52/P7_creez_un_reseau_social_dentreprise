@@ -69,7 +69,7 @@ const Card = ({ post }) => {
                                 <img src="./img/icons/message1.svg" alt="Icone de commentaire" />
                                 <span> {post.comments.length} </span>
                             </div>
-                            <LikeButton />
+                            <LikeButton post={post} />
                         </div>
 
                     </div>
