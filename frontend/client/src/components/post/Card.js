@@ -6,6 +6,7 @@ import LikeButton from './LikeButton';
 import { useDispatch } from 'react-redux';
 import { updatePost } from "../../actions/post.actions";
 import DeletePost from './DeletePost';
+import PostComment from './PostComment';
 
 
 
@@ -13,6 +14,7 @@ const Card = ({ post }) => {
     const [isLoading, setIsLoading] = useState(true);
     const [isUpdated, setIsUpdated] = useState(false);
     const [textUpdate, setTextUpdate] = useState(null);
+    const [showComments, setShowComments] = useState(false);
     const selectionUsers = useSelector((state) => state.usersReducer);
     const usersData = selectionUsers.users;
     const userData = useSelector((state) => state.userReducer);
@@ -92,17 +94,17 @@ const Card = ({ post }) => {
                                 <div onClick={() => setIsUpdated(!isUpdated)}>
                                     <img src="./img/icons/edit.svg" alt="Bouton de modification de post" />
                                 </div>
-                                <DeletePost id={post._id} />  
+                                <DeletePost id={post._id} />
                             </div>
                         )}
                         <div className="card-footer">
                             <div className="comment-icon">
-                                <img src="./img/icons/message1.svg" alt="Icone de commentaire" />
+                                <img onClick={() => setShowComments(!showComments)} src="./img/icons/message1.svg" alt="Icone de commentaire" />
                                 <span> {post.comments.length} </span>
                             </div>
                             <LikeButton post={post} />
                         </div>
-
+                        {showComments && <PostComment post={post} />}
                     </div>
                 </>
             )}
