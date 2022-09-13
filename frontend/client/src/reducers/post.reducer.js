@@ -1,4 +1,4 @@
-import { GET_POSTS, LIKE_POST, DISLIKE_POST, UPDATE_POST, DELETE_POST, EDIT_COMMENT } from './../actions/post.actions';
+import { GET_POSTS, LIKE_POST, DISLIKE_POST, UPDATE_POST, DELETE_POST, EDIT_COMMENT, DELETE_COMMENT } from './../actions/post.actions';
 const initialState = {};
 
 
@@ -55,6 +55,17 @@ export default function userReducer(state = initialState, action) {
                                 return comment;
                             }
                         }),
+                    };
+                } else return post;
+            });
+        case DELETE_COMMENT:
+            return state.map((post) => {
+                if (post._id === action.payload.postId) {
+                    return {
+                        ...post,
+                        comments: post.comments.filter(
+                            (comment) => comment._id !== action.payload.commentId
+                        ),
                     };
                 } else return post;
             });

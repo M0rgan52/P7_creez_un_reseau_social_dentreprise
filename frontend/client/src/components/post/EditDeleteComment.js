@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { UidContext } from './../AppContext';
 import { useDispatch } from 'react-redux';
-import { editComment } from "../../actions/post.actions";
+import { deleteComment, editComment } from "../../actions/post.actions";
 
 const EditDeleteComment = ({ comment, postId }) => {
     const [isAuthor, setIsAuthor] = useState(false);
@@ -18,6 +18,10 @@ const EditDeleteComment = ({ comment, postId }) => {
             setText("");
             setEdit(false);
         }
+    };
+
+    const handleDelete = () => {
+        dispatch(deleteComment(postId, comment._id))
     };
 
     useEffect(() => {
@@ -38,11 +42,21 @@ const EditDeleteComment = ({ comment, postId }) => {
             )}
             {isAuthor && edit && (
                 <form action="" onSubmit={handleEdit} className="edit-comment-form">
-                    <label htmlFor="text" onClick={() => setEdit(!edit)} >Editer</label>
+                    <label htmlFor="text" onClick={() => setEdit(!edit)} >Annuler</label>
                     <br />
                     <input type="text" name="text" onChange={(e) => setText(e.target.value)} defaultValue={comment.text} />
                     <br />
-                    <input type="submit" value="Modifier mon commentaire" />
+                    <div className="btn">
+                        <span onClick={() => {
+                            if (window.confirm("Êtes-vous sûr de vouloir supprimer ce commentaire ?")) {
+                                handleDelete();
+                            }
+                        }} >
+                            <img src="./img/icons/trash.svg" alt="Bouton pour supprimer son commentaire" />
+                        </span>
+                        <input type="submit" value="Modifier mon commentaire" />
+                    </div>
+
                 </form>
             )}
 
