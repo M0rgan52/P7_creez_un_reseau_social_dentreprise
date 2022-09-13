@@ -60,23 +60,15 @@ module.exports.updatePost = async (req, res) => {
 
 };
 
-module.exports.deletePost = async (req, res) => {
-
+module.exports.deletePost = (req, res) => {
     if (!ObjectID.isValid(req.params.id))
-        return res.status(400).send("ID inconnu : " + req.params.id);
-
-    PostModel.findOne({ _id: req.params.id })
-        .then(post => {
-            const filename = post.picture.split('/images/')[1];
-            fs.unlink(`./images/${filename}`, () => {
-                PostModel.deleteOne({ _id: req.params.id })
-                    .then(() => res.status(200).json({ message: 'post supprimée !' }))
-                    .catch(error => res.status(401).json({ error }));
-            })
-        })
-        .catch(error => res.status(500).json({ error }));
-};
-
+      return res.status(400).send("ID unknown : " + req.params.id);
+  
+    PostModel.findByIdAndRemove(req.params.id, (err, docs) => {
+      if (!err) res.send(docs);
+      else console.log("Delete error : " + err);
+    });
+  };
 module.exports.likePost = async (req, res) => {
     if (!ObjectID.isValid(req.params.id))
         return res.status(400).send("ID unknown : " + req.params.id);
