@@ -13,7 +13,7 @@ Il s'agit du projet n°7 d'OpenClassrooms où l'on doit créer un réseau social
 - Mongo DB
 - Express
 - React
-- Node
+- Node.js
 
 ## Pour lancer le projet 
 
