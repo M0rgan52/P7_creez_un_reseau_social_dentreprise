@@ -5,6 +5,7 @@ import { addComment } from "../../actions/post.actions";
 import { isEmpty } from "../Utils";
 import { timestampParser } from './../Utils';
 import { getPosts } from './../../actions/post.actions';
+import EditDeleteComment from "./EditDeleteComment";
 
 const PostComment = ({ post }) => {
     const [text, setText] = useState("");
@@ -53,7 +54,7 @@ const PostComment = ({ post }) => {
                                 <span>{timestampParser(comment.timestamp)}</span>
                             </div>
                             <p>{comment.text}</p>
-
+                                <EditDeleteComment comment={comment} postId={post._id} />
                         </div>
 
                     </div>
