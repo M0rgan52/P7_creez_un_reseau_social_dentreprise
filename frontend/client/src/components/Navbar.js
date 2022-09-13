@@ -12,7 +12,7 @@ const Navbar = () => {
         <nav>
             <div className="nav-container">
                 <div className="logo">
-                    <NavLink exact to="/">
+                    <NavLink exact="true" to="/">
                         <div className="logo">
                             <img src="./img/logos/icon-left-font-monochrome-black.svg" alt="icon" />
                             <h3>Réseau Groupomania</h3>
@@ -23,7 +23,7 @@ const Navbar = () => {
                     <ul>
                         <li></li>
                         <li className="welcome">
-                            <NavLink exact to="/profil">
+                            <NavLink exact="true" to="/profil">
                                 <h5>Bienvenue {userData.prenom}</h5>
                             </NavLink>
                         </li>
@@ -33,7 +33,7 @@ const Navbar = () => {
                     <ul>
                         <li></li>
                         <li>
-                            <NavLink exact to="/profil">
+                            <NavLink exact="true" to="/profil">
                                 <img src="./img/icons/login.svg" alt="login" />
                             </NavLink>
                         </li>
