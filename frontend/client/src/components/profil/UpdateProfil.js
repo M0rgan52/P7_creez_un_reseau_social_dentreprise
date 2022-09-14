@@ -12,6 +12,7 @@ const UpdateProfil = () => {
     const [fonction, setFonction] = useState("");
     const [updateForm, setUpdateForm] = useState(false);
     const userData = useSelector((state) => state.userReducer);
+    const error = useSelector((state) => state.errorReducer.userError);
     const dispatch = useDispatch();
 
     const handleUpdatePrenom = () => {
@@ -38,6 +39,8 @@ const UpdateProfil = () => {
                     {/* eslint-disable-next-line */}
                     <img src={userData.picture} alt="Photo de profil" />
                     <UploadImg />
+                    <p>{error.maxSize}</p>
+                    <p>{error.format}</p>
                 </div>
                 <div className="right-part">
                     <div className="bio-update">

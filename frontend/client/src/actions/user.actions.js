@@ -5,6 +5,7 @@ export const UPLOAD_PICTURE = "UPLOAD_PICTURE";
 export const UPDATE_PRENOM = "UPDATE_PRENOM";
 export const UPDATE_NOM = "UPDATE_NOM";
 export const UPDATE_FONCTION = "UPDATE_FONCTION";
+export const GET_USER_ERRORS = "GET_USER_ERRORS";
 
 
 export const getUser = (uid) => {
@@ -23,16 +24,20 @@ export const uploadPicture = (data, id) => {
         return axios
             .post(`${process.env.REACT_APP_API_URL}api/user/upload`, data)
             .then((res) => {
-                return axios
+                if (res.data.errors) {
+                  dispatch({ type: GET_USER_ERRORS, payload: res.data.errors });
+                } else {
+                  dispatch({ type: GET_USER_ERRORS, payload: "" });
+                  return axios
                     .get(`${process.env.REACT_APP_API_URL}api/user/${id}`)
                     .then((res) => {
-                        dispatch({ type: UPLOAD_PICTURE, payload: res.data.picture });
-                    })
-                    .catch((err) => console.log(err));
-            })
-            .catch((err) => console.log(err));
-    };
-};
+                      dispatch({ type: UPLOAD_PICTURE, payload: res.data.picture });
+                    });
+                }
+              })
+              .catch((err) => console.log(err));
+          };
+        };
 
 export const updatePrenom = (userId, prenom) => {
     return (dispatch) => {
