@@ -10,22 +10,24 @@ const UpdateProfil = () => {
     const [prenom, setPrenom] = useState("");
     const [nom, setNom] = useState("");
     const [fonction, setFonction] = useState("");
-    const [updateForm, setUpdateForm] = useState(false);
+    const [updateFormPrenom, setUpdateFormPrenom] = useState(false);
+    const [updateFormNom, setUpdateFormNom] = useState(false);
+    const [updateFormFonction, setUpdateFormFonction] = useState(false);
     const userData = useSelector((state) => state.userReducer);
     const error = useSelector((state) => state.errorReducer.userError);
     const dispatch = useDispatch();
 
     const handleUpdatePrenom = () => {
         dispatch(updatePrenom(userData._id, prenom));
-        setUpdateForm(false);
+        setUpdateFormPrenom(false);
     };
     const handleUpdateNom = () => {
         dispatch(updateNom(userData._id, nom));
-        setUpdateForm(false);
+        setUpdateFormNom(false);
     };
     const handleUpdateFonction = () => {
         dispatch(updateFonction(userData._id, fonction));
-        setUpdateForm(false);
+        setUpdateFormFonction(false);
     };
 
 
@@ -43,15 +45,15 @@ const UpdateProfil = () => {
                     <p>{error.format}</p>
                 </div>
                 <div className="right-part">
-                    <div className="bio-update">
+                    <div>
                         <h3>Prénom</h3>
-                        {updateForm === false && (
+                        {updateFormPrenom === false && (
                             <>
-                                <p onClick={() => setUpdateForm(!updateForm)}>{userData.prenom}</p>
-                                <button onClick={() => setUpdateForm(!updateForm)}>Modifier le prénom</button>
+                                <p onClick={() => setUpdateFormPrenom(!updateFormPrenom)}>{userData.prenom}</p>
+                                <button onClick={() => setUpdateFormPrenom(!updateFormPrenom)}>Modifier le prénom</button>
                             </>
                         )}
-                        {updateForm && (
+                        {updateFormPrenom && (
                             <>
                                 <textarea type="text" defaultValue={userData.prenom} onChange={(e) => setPrenom(e.target.value)}></textarea>
                                 <button onClick={handleUpdatePrenom}>Valider</button>
@@ -59,15 +61,15 @@ const UpdateProfil = () => {
                         )}
                     </div>
                     <br />
-                    <div className="bio-update">
+                    <div>
                         <h3>Nom</h3>
-                        {updateForm === false && (
+                        {updateFormNom === false && (
                             <>
-                                <p onClick={() => setUpdateForm(!updateForm)}>{userData.nom}</p>
-                                <button onClick={() => setUpdateForm(!updateForm)}>Modifier le nom</button>
+                                <p onClick={() => setUpdateFormNom(!updateFormNom)}>{userData.nom}</p>
+                                <button onClick={() => setUpdateFormNom(!updateFormNom)}>Modifier le nom</button>
                             </>
                         )}
-                        {updateForm && (
+                        {updateFormNom && (
                             <>
                                 <textarea type="text" defaultValue={userData.nom} onChange={(e) => setNom(e.target.value)}></textarea>
                                 <button onClick={handleUpdateNom}>Valider</button>
@@ -75,15 +77,15 @@ const UpdateProfil = () => {
                         )}
                     </div>
                     <br />
-                    <div className="bio-update">
+                    <div>
                         <h3>Fonction</h3>
-                        {updateForm === false && (
+                        {updateFormFonction === false && (
                             <>
-                                <p onClick={() => setUpdateForm(!updateForm)}>{userData.fonction}</p>
-                                <button onClick={() => setUpdateForm(!updateForm)}>Modifier la fonction</button>
+                                <p onClick={() => setUpdateFormFonction(!updateFormFonction)}>{userData.fonction}</p>
+                                <button onClick={() => setUpdateFormFonction(!updateFormFonction)}>Modifier la fonction</button>
                             </>
                         )}
-                        {updateForm && (
+                        {updateFormFonction && (
                             <>
                                 <textarea type="text" defaultValue={userData.fonction} onChange={(e) => setFonction(e.target.value)}></textarea>
                                 <button onClick={handleUpdateFonction}>Valider</button>
