@@ -42,7 +42,7 @@ const EditDeleteComment = ({ comment, postId }) => {
                     <img src="./img/icons/edit.svg" alt="Bouton pour modifier mon commentaire" />
                 </span>
             )}
-            {userData._id === "6321a9a08f03772f1e87c2d9" && edit === false && (
+            {userData._id === process.env.REACT_APP_ADMIN && edit === false && (
                 <span onClick={() => setEdit(!edit)}>
                     <img src="./img/icons/edit.svg" alt="Bouton pour modifier mon commentaire" />
                 </span>
@@ -66,7 +66,7 @@ const EditDeleteComment = ({ comment, postId }) => {
 
                 </form>
             )}
-            {userData._id === "6321a9a08f03772f1e87c2d9" && edit  && (
+            {userData._id === process.env.REACT_APP_ADMIN && edit  && (
                 <form action="" onSubmit={handleEdit} className="edit-comment-form">
                     <label htmlFor="text" onClick={() => setEdit(!edit)} >Annuler</label>
                     <br />

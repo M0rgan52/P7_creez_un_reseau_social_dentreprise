@@ -97,7 +97,7 @@ const Card = ({ post }) => {
                                 <DeletePost id={post._id} />
                             </div>
                         )}
-                        {userData._id === "6321a9a08f03772f1e87c2d9" && (
+                        {userData._id === process.env.REACT_APP_ADMIN && (
                             <div className="button-container">
                                 <div onClick={() => setIsUpdated(!isUpdated)}>
                                     <img src="./img/icons/edit.svg" alt="Bouton de modification de post" />
