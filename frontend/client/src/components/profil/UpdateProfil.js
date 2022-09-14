@@ -61,6 +61,7 @@ const UpdateProfil = () => {
                         )}
                     </div>
                     <br />
+                    <br />
                     <div>
                         <h3>Nom</h3>
                         {updateFormNom === false && (
@@ -76,6 +77,7 @@ const UpdateProfil = () => {
                             </>
                         )}
                     </div>
+                    <br />
                     <br />
                     <div>
                         <h3>Fonction</h3>
