@@ -33,6 +33,7 @@ Il s'agit du projet n°7 d'OpenClassrooms où l'on doit créer un réseau social
 
 - Dans frontend/client, créer un fichier .env avec les informations suivantes :
   - REACT_APP_API_URL=http://localhost:5000/
+  - REACT_APP_ADMIN="6321a9a08f03772f1e87c2d9"
 - Dans un nouveau terminal :
   - cd frontend/client
   - npm install
