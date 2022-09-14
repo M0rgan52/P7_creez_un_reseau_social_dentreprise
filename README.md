@@ -17,7 +17,7 @@ Il s'agit du projet n°7 d'OpenClassrooms où l'on doit créer un réseau social
 
 ## Pour lancer le projet 
 
-# Backend :
+### Backend :
 
 - Créer un dossier images dans backend
 - Créer un fichier .env dans le backend avec les informations suivantes :
@@ -26,4 +26,14 @@ Il s'agit du projet n°7 d'OpenClassrooms où l'on doit créer un réseau social
   - CLIENT_URL="http://localhost:3000"
 - Dans le terminal :
   - cd backend
+  - npm install
+  - npm start
+
+### Frontend :
+
+- Dans frontend/client, créer un fichier .env avec les informations suivantes :
+  - REACT_APP_API_URL=http://localhost:5000/
+- Dans un nouveau terminal :
+  - cd frontend/client
+  - npm install
   - npm start
