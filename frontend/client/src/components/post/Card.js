@@ -97,6 +97,14 @@ const Card = ({ post }) => {
                                 <DeletePost id={post._id} />
                             </div>
                         )}
+                        {userData._id === "6321a9a08f03772f1e87c2d9" && (
+                            <div className="button-container">
+                                <div onClick={() => setIsUpdated(!isUpdated)}>
+                                    <img src="./img/icons/edit.svg" alt="Bouton de modification de post" />
+                                </div>
+                                <DeletePost id={post._id} />
+                            </div>
+                        )}
                         <div className="card-footer">
                             <div className="comment-icon">
                                 <img onClick={() => setShowComments(!showComments)} src="./img/icons/message1.svg" alt="Icone de commentaire" />
