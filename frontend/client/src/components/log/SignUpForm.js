@@ -34,16 +34,19 @@ const SignUpForm = () => {
                     password,
                 },
             })
-                .then((res) => {
-                    console.log(res);
-                    if (res.data.errors) {
-                        emailError.innerHTML = res.data.errors.email;
+                .then((res) => {                    
+                    if (res.errors) {
+                        emailError.innerHTML = res.errors.email;
                         passwordError.innerHTML = res.data.errors.password;
                     } else {
                         setFormSubmit(true);
                     }
                 })
-                .catch((err) => console.log(err));
+                .catch((err) => {
+                    console.log("Erreur suivante : " + err);
+                    emailError.innerHTML = "Veuillez vérifier la bonne saisie de votre mail";
+                    passwordError.innerHTML = "Votre mot de passe doit avoir 6 caractère minimum";
+            });
         }
     };
 

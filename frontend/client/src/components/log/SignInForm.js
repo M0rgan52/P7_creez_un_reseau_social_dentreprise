@@ -29,6 +29,7 @@ const SignInForm = () => {
             })
             .catch((err) => {
                 console.log(err);
+                passwordError.innerHTML = "Combinaison email/mot de passe incorrecte";
             });
     };
 
