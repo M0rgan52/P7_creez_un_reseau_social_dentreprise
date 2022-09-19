@@ -44,9 +44,10 @@ module.exports.updatePost = async (req, res) => {
     if (!ObjectID.isValid(req.params.id))
         return res.status(400).send("ID inconnu : " + req.params.id);
 
-    const updatedRecord = {
-        message: req.body.message
-    }
+    const updatedRecord = req.file ? {
+        message: req.body.message,
+        picture: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`
+    } : {message: req.body.message}
 
     PostModel.findByIdAndUpdate(
         req.params.id,
