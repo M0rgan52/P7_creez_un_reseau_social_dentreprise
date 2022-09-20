@@ -6,6 +6,7 @@ const multer = require("../middleware/multer.config.middleware");
 // Routes utilisateurs
 router.get("/", postController.readPost);
 router.post("/", multer, postController.createPost);
+router.get("/:id", postController.readOnePost);
 router.put("/:id", multer, postController.updatePost);
 router.delete("/:id", postController.deletePost);
 router.patch("/like-post/:id", postController.likePost);

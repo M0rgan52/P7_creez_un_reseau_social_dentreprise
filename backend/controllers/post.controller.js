@@ -10,6 +10,13 @@ module.exports.readPost = (req, res) => {
     }).sort({ createdAt: -1 });
 };
 
+module.exports.readOnePost = (req, res, next) => {
+    PostModel.findById(req.params.id, (err, docs) => {
+        if (!err) res.send(docs);
+        else console.log("Lecture seule du post erreur : " + err);
+    });
+}
+
 module.exports.createPost = async (req, res, next) => {
 
     if (req.file != null) {
@@ -44,32 +51,41 @@ module.exports.updatePost = async (req, res) => {
     if (!ObjectID.isValid(req.params.id))
         return res.status(400).send("ID inconnu : " + req.params.id);
 
+
+
     const updatedRecord = req.file ? {
+        posterId: req.body.post,
+        likers: req.body.post,
+        comments: req.body.post,
+        timestamps: true,
         message: req.body.message,
         picture: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`
-    } : {message: req.body.message}
+    } : { ...req.body }
 
-    PostModel.findByIdAndUpdate(
-        req.params.id,
-        { $set: updatedRecord },
-        { new: true },
-        (err, docs) => {
-            if (!err) res.send(docs);
-            else console.log(" Erreur mise à jour : " + err);
-        }
-    )
+    PostModel.findOne({ _id: req.params.id })
+        .then((post) => {
+            // if (post.posterId != user._id) {
+            //     res.status(401).json({ message: 'Non autorisé' })
+            // } else {
+            PostModel.updateOne({ _id: req.params.id }, { ...updatedRecord, _id: req.params.id })
+                .then(() => res.status(200).json({ message: 'Sauce modifiée !' }))
+                .catch(error => res.status(401).json({ "Erreur niveau 1 : ": error }));
+        })
+
+
+        .catch(error => res.status(400).json({ "Erreur niveau 2 : ": error }));
 
 };
 
 module.exports.deletePost = (req, res) => {
     if (!ObjectID.isValid(req.params.id))
-      return res.status(400).send("ID unknown : " + req.params.id);
-  
+        return res.status(400).send("ID unknown : " + req.params.id);
+
     PostModel.findByIdAndRemove(req.params.id, (err, docs) => {
-      if (!err) res.send(docs);
-      else console.log("Delete error : " + err);
+        if (!err) res.send(docs);
+        else console.log("Delete error : " + err);
     });
-  };
+};
 module.exports.likePost = async (req, res) => {
     if (!ObjectID.isValid(req.params.id))
         return res.status(400).send("ID unknown : " + req.params.id);
@@ -81,8 +97,8 @@ module.exports.likePost = async (req, res) => {
                 $addToSet: { likers: req.body.id },
             },
             { new: true })
-            // .then((data) => res.send(data))
-            // .catch((err) => res.status(500).json({ err }));
+        // .then((data) => res.send(data))
+        // .catch((err) => res.status(500).json({ err }));
 
         await UserModel.findByIdAndUpdate(
             req.body.id,
@@ -108,8 +124,8 @@ module.exports.dislikePost = async (req, res) => {
                 $pull: { likers: req.body.id },
             },
             { new: true })
-            // .then((data) => res.send(data))
-            // .catch((err) => res.status(500).json({ err }));
+        // .then((data) => res.send(data))
+        // .catch((err) => res.status(500).json({ err }));
 
         await UserModel.findByIdAndUpdate(
             req.body.id,

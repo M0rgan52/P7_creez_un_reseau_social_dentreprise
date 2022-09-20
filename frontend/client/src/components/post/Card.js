@@ -15,18 +15,48 @@ const Card = ({ post }) => {
     const [isUpdated, setIsUpdated] = useState(false);
     const [textUpdate, setTextUpdate] = useState(null);
     const [showComments, setShowComments] = useState(false);
+    const [file, setFile] = useState();
     const selectionUsers = useSelector((state) => state.usersReducer);
     const usersData = selectionUsers.users;
     const userData = useSelector((state) => state.userReducer);
     const dispatch = useDispatch();
 
 
-    const updateItem = () => {
-        if (textUpdate) {
-            dispatch(updatePost(post._id, textUpdate));
+    const updateItem = (e) => {
+        console.log(post._id);
+
+        if (file && textUpdate) {
+            const data = new FormData();
+            data.append("message", textUpdate);
+            data.append("picture", file);
+            dispatch(updatePost(data, post._id));
+        } else if (textUpdate) {
+            const data = new FormData();
+            data.append("message", textUpdate);
+            data.append("picture", post.picture);
+            dispatch(updatePost(data, post._id));
+        } else if (file) {
+            const data = new FormData();
+            data.append("message", post.message);
+            data.append("picture", file);
+            dispatch(updatePost(data, post._id));
         }
         setIsUpdated(false);
+        setTextUpdate(null);
+        setFile("");
+
+        function RedirectionJavascript() {
+            document.location.href = "http://localhost:3000/";
+        }
+        RedirectionJavascript();
     };
+
+    const handlePicture = (e) => {
+        setFile(e.target.files[0]);
+
+
+    };
+
 
     useEffect(() => {
         if (!isEmpty(usersData[0])) {
@@ -85,6 +115,19 @@ const Card = ({ post }) => {
                                     <button className="btn" onClick={updateItem} >
                                         Modifier
                                     </button>
+                                </div>
+                                <div className="footer-form">
+                                    <div className="icon">
+                                        {/* eslint-disable-next-line  */}
+                                        <img src="./img/icons/picture.svg" alt="Bouton pour ajouter une image" />
+                                        <input
+                                            type="file"
+                                            id="file-upload"
+                                            name="picture"
+                                            accept=".jpg, .jpeg, .png"
+                                            onChange={(e) => handlePicture(e)}
+                                        />
+                                    </div>
                                 </div>
                             </div>
                         )}

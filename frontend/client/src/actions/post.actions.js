@@ -66,18 +66,22 @@ export const dislikePost = (postId, userId) => {
   };
 };
 
-export const updatePost = (postId, message) => {
+export const updatePost = (data, postId) => {
+
   return (dispatch) => {
-    return axios({
-      method: "put",
-      url: `${process.env.REACT_APP_API_URL}api/post/${postId}`,
-      data: { message },
-    })
+    return axios
+      .put(`${process.env.REACT_APP_API_URL}api/post/${postId}`, data)
       .then((res) => {
-        dispatch({ type: UPDATE_POST, payload: { message, postId } });
+        return axios
+          .get(`${process.env.REACT_APP_API_URL}api/post/${postId}`)
+          .then((res) => {
+            dispatch({ type: UPDATE_POST, payload: res.data.picture });
+          });
       })
+
       .catch((err) => console.log(err));
   };
+
 };
 
 export const deletePost = (postId) => {
