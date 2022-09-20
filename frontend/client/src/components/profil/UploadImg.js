@@ -14,6 +14,11 @@ const UploadImg = () => {
         data.append("picture", file);
 
         dispatch(uploadPicture(data, userData._id));
+
+        function RedirectionJavascript() {
+            document.location.href = "http://localhost:3000/profil";
+        }
+        RedirectionJavascript();
     };
 
     return (
