@@ -20,7 +20,7 @@ Il s'agit du projet n°7 d'OpenClassrooms où l'on doit créer un réseau social
 ### Backend :
 
 - Créer un fichier .env dans le backend avec les informations suivantes :
-  - SECRET_DB="mongodb+srv://Admin:ZRvBtD984Mxdrzi4@cluster0.zma24rz.mongodb.net/groupomania"
+  - SECRET_DB="mongodb+srv://Admin:3pBZblsGb75v4M2q@cluster0.zma24rz.mongodb.net/groupomania"
   - TOKEN_SECRET="df5d04b8gdb407t8b04f5b0VFfg6fd+5gd0vc5b6dh8+b90bfg90DVDFV045045df05"
   - CLIENT_URL="http://localhost:3000"
 - Dans le terminal :
